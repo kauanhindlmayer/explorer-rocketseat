@@ -16,6 +16,11 @@ function route(event) {
 
 function handle() {
   const { pathname } = window.location;
+  const route = routes[pathname] || routes[404];
+
+  fetch(route)
+    .then(data => data.text())
+    .then(html => console.log(html));
 
   console.log(pathname);
 }
