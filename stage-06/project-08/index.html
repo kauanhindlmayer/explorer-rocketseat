@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>GitHub Favorites</title>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>GitHub Favorites</h1>
+      <div>
+        <label for="input-search">GitHub User</label>
+        <input id="input-search" type="text" placeholder="GitHub User">
+        <button>&plus;</button>
+      </div>
+    </header>
+    <table>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Repositories</th>
+          <th>Followers</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="user">
+            <img src="http://github.com/kauanhindlmayer.png" alt="Image of Kauan Hindlmayer">
+            <a href="http://github.com/kauanhindlmayer" target="_blank">
+              <p>Kauan Hindlmayer</p>
+              <span>kauanhindlmayer</span>
+            </a>
+          </td>
+          <td class="repositories">
+            16
+          </td>
+          <td class="followers">
+            6
+          </td>
+          <td>
+            <button>&times;</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="user">
+            <img src="http://github.com/diego3g.png" alt="Image of Diego Fernandes">
+            <a href="http://github.com/diego3g" target="_blank">
+              <p>Diego Fernandes</p>
+              <span>diego3g</span>
+            </a>
+          </td>
+          <td class="repositories">
+            48
+          </td>
+          <td class="followers">
+            22503
+          </td>
+          <td>
+            <button>&times;</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
