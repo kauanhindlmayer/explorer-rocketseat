@@ -1,7 +1,7 @@
 const routes = {
   "/": "/pages/home.html",
-  "contact": "/pages/contact.html",
-  "about": "/pages/about.html",
+  "/contact": "/pages/contact.html",
+  "/about": "/pages/about.html",
   404: "/pages/404.html",
 }
 
@@ -20,7 +20,14 @@ function handle() {
 
   fetch(route)
     .then(data => data.text())
-    .then(html => console.log(html));
+    .then(html => {
+      document.querySelector('#app').innerHTML = html;
+    });
 
-  console.log(pathname);
+  console.log(route);
 }
+
+handle();
+
+window.onpopstate = () => handle();
+// window.route = () => route();
