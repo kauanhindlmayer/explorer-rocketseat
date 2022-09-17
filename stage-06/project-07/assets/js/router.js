@@ -1,4 +1,5 @@
-class Router {
+export class Router {
+  routes = {};
 
   add(routeName, page) {
     this.routes[routeName] = page;
@@ -26,11 +27,3 @@ class Router {
     console.log(route);
   }
 }
-
-const router = new Router();
-const router1 = new Router();
-
-router.sayHello();
-router1.sayHello();
-
-console.log(router === router1); // false

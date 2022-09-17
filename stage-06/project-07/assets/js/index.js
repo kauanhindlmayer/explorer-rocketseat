@@ -1,13 +1,14 @@
-import './router.js';
+import { Router } from './router.js';
 
-// const routes = {
-//   "/": "/pages/home.html",
-//   "/contact": "/pages/contact.html",
-//   "/about": "/pages/about.html",
-//   404: "/pages/404.html",
-// }
+const router = new Router();
 
-// handle();
+router.add('/', '/pages/home.html');
+router.add('/contact', '/pages/contact.html');
+router.add('/about', '/pages/about.html');
+router.add(404, '/pages/404.html');
 
-// window.onpopstate = () => handle();
-// window.route = () => route();
+
+router.handle();
+
+window.onpopstate = () => router.handle();
+// window.route = () => router.route();
