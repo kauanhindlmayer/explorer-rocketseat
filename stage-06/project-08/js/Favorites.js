@@ -1,17 +1,4 @@
-export class GitHubUser {
-  static search(username) {
-    const endpoint = `http://api.github.com/users/${username}`;
-
-    return fetch(endpoint)
-      .then(data => data.json())
-      .then(({ login, name, public_repos, followers }) => ({
-        login,
-        name,
-        public_repos,
-        followers,
-      }));
-  }
-}
+import { GitHubUser } from "./GitHubUser.js";
 
 export class Favorites {
   constructor(root) {
@@ -31,6 +18,12 @@ export class Favorites {
 
   async add(username) {
     try {
+      const userExists = this.entries.find(entry => entry.login === username);
+
+      if (userExists) {
+        throw new Error('User already registered!');
+      }
+
       const user = await GitHubUser.search(username);
 
       if (user.login === undefined) {
@@ -69,9 +62,13 @@ export class FavoritesView extends Favorites {
   onAdd() {
     const addButton = this.root.querySelector('.search button');
     addButton.addEventListener('click', () => {
-      const { value } = this.root.querySelector('.search input');
+      // const { value } = this.root.querySelector('.search input');
+      const input = this.root.querySelector('.search input');
 
-      this.add(value);
+      this.add(input.value);
+
+      input.value = '';
+      input.focus();
     });
   }
 
@@ -83,6 +80,7 @@ export class FavoritesView extends Favorites {
 
       row.querySelector('.user img').src = `http://github.com/${user.login}.png`
       row.querySelector('.user p').textContent = user.name;
+      row.querySelector('.user a').href = `http://github.com/${user.login}`;
       row.querySelector('.user img').alt = `Image of ${user.name}`
       row.querySelector('.user span').textContent = user.login;
       row.querySelector('.repositories').textContent = user.public_repos;
