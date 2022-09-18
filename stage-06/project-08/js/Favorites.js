@@ -17,14 +17,20 @@ export class Favorites {
   constructor(root) {
     this.root = document.querySelector(root);
     this.load();
-
-    GitHubUser.search('kauanhindlmayer').then(user => console.log(user));
   }
 
   load() {
     this.entries = JSON.parse(
       localStorage.getItem('@github-favorites:')
     ) || [];
+  }
+
+  async add(username) {
+    const user = await GitHubUser.search(username);
+
+    this.entries.push(user);
+    this.createRow()
+    this.update()
   }
 
   delete(user) {
@@ -44,6 +50,16 @@ export class FavoritesView extends Favorites {
     this.tbody = this.root.querySelector('table tbody');
 
     this.update();
+    this.onAdd();
+  }
+
+  onAdd() {
+    const addButton = this.root.querySelector('.search button');
+    addButton.addEventListener('click', () => {
+      const { value } = this.root.querySelector('.search input');
+
+      this.add(value);
+    });
   }
 
   update() {
@@ -75,18 +91,14 @@ export class FavoritesView extends Favorites {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td class="user">
-        <img src="http://github.com/diego3g.png" alt="Image of Diego Fernandes">
-        <a href="http://github.com/diego3g" target="_blank">
-          <p>Diego Fernandes</p>
-          <span>diego3g</span>
+        <img src="" alt="">
+        <a href="" target="_blank">
+          <p></p>
+          <span></span>
         </a>
       </td>
-      <td class="repositories">
-        48
-      </td>
-      <td class="followers">
-        22503
-      </td>
+      <td class="repositories"></td>
+      <td class="followers"></td>
       <td>
         <button class="remove">&times;</button>
       </td>
