@@ -5,26 +5,18 @@ export class Favorites {
   }
 
   load() {
-    this.entries = [
-      {
-        login: 'kauanhindlmayer',
-        name: 'Kauan Hindlmayer',
-        public_repos: '15',
-        followers: '6'
-      },
-      {
-        login: 'diego3g',
-        name: 'Diego Fernandes',
-        public_repos: '76',
-        followers: '26503'
-      },
-    ];
+    this.entries = JSON.parse(
+      localStorage.getItem('@github-favorites:') || []
+    );
   }
 
   delete(user) {
     // Higher-order functions (map, filter, find, reduce)
     const filteredEntries = this.entries
       .filter((entry) => entry.login !== user.login);
+
+    this.entries = filteredEntries;
+    this.update();
   }
 }
 
