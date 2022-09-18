@@ -20,6 +20,12 @@ export class Favorites {
       },
     ];
   }
+
+  delete(user) {
+    // Higher-order functions (map, filter, find, reduce)
+    const filteredEntries = this.entries
+      .filter((entry) => entry.login !== user.login);
+  }
 }
 
 export class FavoritesView extends Favorites {
@@ -43,6 +49,14 @@ export class FavoritesView extends Favorites {
       row.querySelector('.user span').textContent = user.login;
       row.querySelector('.repositories').textContent = user.public_repos;
       row.querySelector('.followers').textContent = user.followers;
+
+      row.querySelector('.remove').addEventListener('click', () => {
+        const accepted = confirm('Are you sure you want to delete this row?');
+
+        if (accepted) {
+          this.delete(user);
+        }
+      });
 
       this.tbody.append(row);
     });
