@@ -25,12 +25,24 @@ export class Favorites {
     ) || [];
   }
 
-  async add(username) {
-    const user = await GitHubUser.search(username);
+  save() {
+    localStorage.setItem('@github-favorites:', JSON.stringify(this.entries));
+  }
 
-    this.entries.push(user);
-    this.createRow()
-    this.update()
+  async add(username) {
+    try {
+      const user = await GitHubUser.search(username);
+
+      if (user.login === undefined) {
+        throw new Error('User not found!');
+      }
+
+      this.entries = [user,...this.entries];
+      this.update();
+      this.save();
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
   delete(user) {
@@ -40,6 +52,7 @@ export class Favorites {
 
     this.entries = filteredEntries;
     this.update();
+    this.save();
   }
 }
 
