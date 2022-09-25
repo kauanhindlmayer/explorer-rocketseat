@@ -56,11 +56,22 @@ class NotesController {
   }
 
   async index(request, response) {
-    const { user_id } = request.query;
+    const { user_id, title, tags } = request.query;
 
-    const notes = await knex("notes")
+    let notes;
+
+    if (tags) {
+      const filteredTags = tags.split(',').map(tag => tag.trim());
+
+      notes = await knex("tags")
+        .whereIn("name", filteredTags)
+
+    } else {
+      notes = await knex("notes")
       .where({ user_id })
+      .whereLike("title", `%${title}%`)
       .orderBy("title");
+    }
 
     return response.json(notes);
   }
