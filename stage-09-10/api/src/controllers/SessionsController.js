@@ -1,20 +1,23 @@
 const knex = require("../database/knex");
-const AppError = require("../utils/AppError");
 const { compare } = require("bcryptjs");
-const authConfig = require("../configs/auth");
 const { sign } = require("jsonwebtoken");
+const AppError = require("../utils/AppError");
+const authConfig = require("../configs/auth");
 
 class SessionsController {
   async create(request, response) {
     const { email, password } = request.body;
 
     const user = await knex("users").where({ email }).first();
-
+    
     if (!user) {
       throw new AppError("E-mail or password invalid!", 401);
     }
 
-    const passwordMatched = await compare(password, user.password);
+    const passwordMatched = await compare(
+      password, 
+      user.password,
+    );
 
     if (!passwordMatched) {
       throw new AppError("E-mail or password invalid!", 401);
@@ -26,7 +29,7 @@ class SessionsController {
       expiresIn
     })
 
-    return response.json({ user, token});
+    return response.status(201).json({ user, token});
   }
 }
 

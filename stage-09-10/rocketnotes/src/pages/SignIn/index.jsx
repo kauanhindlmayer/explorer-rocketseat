@@ -30,19 +30,19 @@ export function SignIn() {
           placeholder="E-mail"
           type="text"
           icon={FiMail}
-          onClick={e => setEmail(e.target.value)}
+          onChange={e => setEmail(e.target.value)}
         />
 
         <Input 
           placeholder="Password"
           type="password"
           icon={FiLock}
-          onClick={e => setPassword(e.target.value)}
+          onChange={e => setPassword(e.target.value)}
         />
 
         <Button title="Enter" onClick={handleSignIn} />
 
-        <Link to="/register">New here? Create an account</Link>
+        <Link to="/register">New here? Create account</Link>
 
       </Form>
       <Background />
