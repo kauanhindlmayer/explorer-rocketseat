@@ -47,12 +47,12 @@ export function New() {
       return alert("You didn't add a title for your note!");
     }
 
-    if (newTag) {
-      return alert("You typed a new tag, but you didn't add it!");
-    }
-
     if (newLink) {
       return alert("You typed a new link, but you didn't add it!");
+    }
+
+    if (newTag) {
+      return alert("You typed a new tag, but you didn't add it!");
     }
 
     await api.post("/notes", {
