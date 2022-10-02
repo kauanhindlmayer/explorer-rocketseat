@@ -1,50 +1,91 @@
+import { useState, useEffect } from "react"
 import { Container, Links, Content } from "./styles"
+import { useParams, useNavigate } from "react-router-dom"
 
 import { Header } from "../../components/Header"
 import { Button } from "../../components/Button"
 import { Section } from "../../components/Section"
 import { Tag } from "../../components/Tag"
 import { ButtonText } from "../../components/ButtonText"
+import { api } from "../../services/api"
 
 export function Details() {
+  const [data, setData] = useState(null);
+
+  const params = useParams();
+  const navigate = useNavigate();
+
+  function handleBack() {
+    navigate("/");
+  }
+
+  useEffect(() => {
+    async function fetchNote() {
+      const response = await api.get(`/notes/${params.id}`);
+      setData(response.data);
+    }
+
+    fetchNote();
+  }, []);
+
   return (
     <Container>
       <Header />
+      {
+        data &&
+        <main>
+          <Content>
 
-      <main>
-        <Content>
+            <ButtonText title="Delete note" />
 
-          <ButtonText title="Delete note" />
+            <h1>
+              {data.title}
+            </h1>
+            <p>
+              {data.description}
+            </p>
 
-          <h1>React Crash Course</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-            Fuga, accusantium commodi qui cum quo omnis incidunt temporibus 
-            deleniti, quibusdam, tempore eius facilis architecto odit eaque 
-            nobis aspernatur quod tempora iste?
-          </p>
+            { data.links &&
+              <Section title="Useful links">
+                <Links>
+                  {
+                    data.links.map(link => (
+                      <li key={String(link.id)}>
+                        <a 
+                          href={link.url}
+                          target="_blank"
+                        >
+                          {link.url}
+                        </a>
+                      </li>
+                    ))
+                  }
+                </Links>
+              </Section>
+            }
 
-          <Section title="Useful links">
-            <Links>
-              <li>
-                <a href="#">http://www.rocketseat.com.br/</a>
-              </li>
-              <li>
-                <a href="#">http://www.rocketseat.com.br/</a>
-              </li>
-            </Links>
-          </Section>
+            {
+              data.tags &&
+              <Section title="Tags">
+                {
+                  data.tags.map(tag => (
+                    <Tag 
+                      key={String(tag.id)}
+                      title={tag.name} 
+                    />
+                  ))
+                }
+              </Section>
+            }
 
-          <Section title="Tags">
-            <Tag title="express" />
-            <Tag title="nodejs" />
-          </Section>
+            <Button 
+              title="Back" 
+              onClick={handleBack}
+            />
 
-          <Button title="Back" />
-
-        </Content>
-      </main>
-
+          </Content>
+        </main>
+      }
     </Container>
   )
 }
