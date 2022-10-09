@@ -38,6 +38,10 @@ a {
   text-decoration: none;
 }
 
+ul li a {
+  opacity: 0.5;
+}
+
 ul li a:hover {
   font-weight: bold;
 }
