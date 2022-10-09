@@ -6,3 +6,19 @@ body {
   width: 1000px;
   margin: 65px auto 0;
 }
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 55px;
+}
+
+ul {
+  display: flex;
+  gap: 48px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
