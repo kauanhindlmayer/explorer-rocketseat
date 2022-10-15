@@ -227,3 +227,7 @@ footer .button {
 footer .button:hover {
   filter: brightness(0.9);
 }
+
+input:invalid {
+  border: 1px solid #FF1010;
+}
