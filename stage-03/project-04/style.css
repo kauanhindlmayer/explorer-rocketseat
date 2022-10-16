@@ -113,8 +113,4 @@ ul li span {
     max-width: 450px;
     align-items: center;
   }
-
-  ul li + li {
-    margin-bottom: 3.2rem;
-  }
 }
