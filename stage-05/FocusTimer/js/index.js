@@ -4,6 +4,22 @@ const buttonStop = document.querySelector('.stop');
 const buttonSet = document.querySelector('.set');
 const buttonSoundOn = document.querySelector('.sound-on');
 const buttonSoundOff = document.querySelector('.sound-off');
+let minutes;
+const minutesDisplay = document.querySelector('.minutes');
+const secondsDisplay = document.querySelector('.seconds');
+
+const countdown = () => {
+  setTimeout(() => {
+    let seconds = Number(secondsDisplay.textContent);
+
+    if (seconds <= 0) {
+      seconds = 60;
+    }
+
+    secondsDisplay.textContent =  Number(secondsDisplay.textContent) -1;
+    countdown();
+  }, 1000)
+}
 
 // Programação imperativa
 //                          event    callback function
@@ -12,6 +28,8 @@ buttonPlay.addEventListener('click', () => {
   buttonPause.classList.remove('hide');
   buttonSet.classList.add('hide');
   buttonStop.classList.remove('hide');
+
+  countdown();
 });
 
 //                          event    callback function
@@ -36,3 +54,8 @@ buttonSoundOn.addEventListener('click', () => {
   buttonSoundOn.classList.add('hide');
   buttonSoundOff.classList.remove('hide');
 });
+
+buttonSet.addEventListener('click', () => {
+  minutes = prompt('Quantos minutos?');
+  minutesDisplay.textContent = minutes;
+})
