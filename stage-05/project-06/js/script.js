@@ -11,11 +11,22 @@ form.onsubmit = (event) => {
   const weight = inputWeight.value;
   const height = inputHeight.value;
 
+  const showAlertError = notNumber(weight) || notNumber(height);
+
+  if (showAlertError) {
+    alert('Apenas números são permitidos!');
+    return;
+  }
+
   const result = IMC(weight, height);
   const message = `Seu IMC é de ${result}`;
   
   Modal.open();
   Modal.message.innerText = message;
+}
+
+const notNumber = (value) => {
+  return isNaN(value) || value == "";
 }
 
 const IMC = (weight, height) => {
