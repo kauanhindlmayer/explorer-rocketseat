@@ -7,4 +7,3 @@ export const AlertError = {
     AlertError.element.classList.remove('open');
   }
 }
-
