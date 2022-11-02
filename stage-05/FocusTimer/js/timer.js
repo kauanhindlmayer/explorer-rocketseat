@@ -1,17 +1,21 @@
 export function Timer({
   minutesDisplay,
   secondsDisplay,
-  timerTimeOut,
-  resetControls
+  resetControls,
 }) {
+  let timerTimeOut;
+  let minutes = Number(minutesDisplay.textContent);
+
   const reset = () => {
     updateDisplay(minutes, 0);
     clearTimeout(timerTimeOut);
   }
+
   const updateDisplay = (minutes, seconds) => {
     minutesDisplay.textContent = String(minutes).padStart(2, "0");
     secondsDisplay.textContent = String(seconds).padStart(2, "0");
   }
+
   const countdown = () => {
     timerTimeOut = setTimeout(() => {
       let seconds = Number(secondsDisplay.textContent);
@@ -35,9 +39,19 @@ export function Timer({
     }, 1000)
   }
 
+  const updateMinutes = (newMinutes) => {
+    minutes = newMinutes;
+  }
+
+  const hold = () => {
+    clearTimeout(timerTimeOut);
+  }
+
   return {
     countdown,
     updateDisplay,
-    reset
+    reset,
+    updateMinutes,
+    hold
   }
 }
