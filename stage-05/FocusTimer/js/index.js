@@ -8,32 +8,42 @@ let minutes;
 const minutesDisplay = document.querySelector('.minutes');
 const secondsDisplay = document.querySelector('.seconds');
 
+const resetControls = () => {
+  buttonPlay.classList.remove('hide');
+  buttonPause.classList.add('hide');
+  buttonSet.classList.remove('hide');
+  buttonStop.classList.add('hide');
+}
+
+const updateTimerDisplay = (minutes, seconds) => {
+  minutesDisplay.textContent = String(minutes).padStart(2, "0");
+  secondsDisplay.textContent = String(seconds).padStart(2, "0");
+}
+
 const countdown = () => {
   setTimeout(() => {
     let seconds = Number(secondsDisplay.textContent);
     let minutes = Number(minutesDisplay.textContent);
 
-    secondsDisplay.textContent =  String(seconds -1).padStart(2, "0");
+    updateTimerDisplay(minutes, 0);
 
     if (minutes <= 0) { 
-      buttonPlay.classList.remove('hide');
-      buttonPause.classList.add('hide');
-      buttonSet.classList.remove('hide');
-      buttonStop.classList.add('hide');      
+      resetControls();   
       return;
     };
 
     if (seconds <= 0) {
       seconds = 10;
-      minutesDisplay.textContent = String(minutes -1).padStart(2, "0");
+      minutes--;
     }
+
+    updateTimerDisplay(minutes, String(seconds - 1));
     
     countdown();
   }, 1000)
 }
 
-// Programação imperativa
-//                          event    callback function
+// Programação imperativa X Programação Declarativa
 buttonPlay.addEventListener('click', () => {
   buttonPlay.classList.add('hide');
   buttonPause.classList.remove('hide');
@@ -43,18 +53,13 @@ buttonPlay.addEventListener('click', () => {
   countdown();
 });
 
-//                          event    callback function
 buttonPause.addEventListener('click', () => {
   buttonPlay.classList.remove('hide');
   buttonPause.classList.add('hide');  
 });
 
-buttonStop.addEventListener('click', () => {
-  buttonPlay.classList.remove('hide');
-  buttonPause.classList.add('hide');
-  buttonSet.classList.remove('hide');
-  buttonStop.classList.add('hide');
-});
+//                          event    callback function
+buttonStop.addEventListener('click', resetControls);
 
 buttonSoundOff.addEventListener('click', () => {
   buttonSoundOn.classList.remove('hide');
@@ -68,5 +73,5 @@ buttonSoundOn.addEventListener('click', () => {
 
 buttonSet.addEventListener('click', () => {
   minutes = prompt('Quantos minutos?');
-  minutesDisplay.textContent = String(minutes).padStart(2, "0");
+  updateTimerDisplay(minutes, 0);
 })
