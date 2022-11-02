@@ -1,4 +1,4 @@
-export function Controls({
+export default function Controls({
   buttonPlay,
   buttonPause,
   buttonSet,
